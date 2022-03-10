@@ -1,0 +1,18 @@
+.root{
+    -fx-background-image: url('images/space.png');
+}
+
+#specialButton{
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-background-radius: 40px;
+    -fx-border-width: 2px;
+    -fx-border-color: white;
+    -fx-border-radius: 40px;
+}
+
+.button{
+
+}
+
