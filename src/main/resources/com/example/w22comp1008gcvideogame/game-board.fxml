@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.StackPane?>
 
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.w22comp1008gcvideogame.GameBoardController">
+<AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.w22comp1008gcvideogame.GameBoardController">
    <children>
       <StackPane layoutX="469.0" layoutY="386.0" prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" text="Start Game" />
+            <Button id="specialButton" fx:id="startButton" mnemonicParsing="false" onAction="#startGame" text="Start Game" />
          </children>
       </StackPane>
    </children>
