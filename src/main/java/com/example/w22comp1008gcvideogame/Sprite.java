@@ -3,22 +3,20 @@ package com.example.w22comp1008gcvideogame;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Sprite {
-    private Image image;
-    private int posX, posY, imageWidth, imageHeight, speed;
+public abstract class Sprite {
+    protected Image image;
+    protected int posX, posY, imageWidth, imageHeight, speed;
     private boolean alive;
 
     /**
      * This is the constructor for the Sprite class
-     * @param image - javafx Image
      * @param posX - the left most position of the Sprite
      * @param posY - the top positon of the Sprite
      * @param imageWidth - the width of the image when drawn
      * @param imageHeight - the height of the image when drawn
      * @param speed - how many pixels the Sprite can move hj
      */
-    public Sprite(Image image, int posX, int posY, int imageWidth, int imageHeight, int speed) {
-        setImage(image);
+    public Sprite(int posX, int posY, int imageWidth, int imageHeight, int speed) {
         setPosX(posX);
         setPosY(posY);
         setImageWidth(imageWidth);

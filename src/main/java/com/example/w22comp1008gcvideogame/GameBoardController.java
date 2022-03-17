@@ -28,10 +28,9 @@ public class GameBoardController {
 
         //we need to load some images to draw the background and the ship
         Image background = new Image(getClass().getResource("images/space.png").toExternalForm());
-        Image shipImage = new Image(getClass().getResource("images/ship.png").toExternalForm());
 
         //create the Ship sprite
-        Sprite ship = new Sprite(shipImage, 400,100, 100, 70, 3);
+        Ship ship = new Ship(100,100);
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -41,9 +40,7 @@ public class GameBoardController {
                 ship.moveRight();
             }
         };
-
         timer.start();
-
 
         //attach the canvas to the anchorpane
         anchorPane.getChildren().add(canvas);
