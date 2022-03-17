@@ -3,12 +3,42 @@ package com.example.w22comp1008gcvideogame;
 public class GameConfig {
     private static int game_width = 1000;
     private static int game_height = 800;
+
     private static int ship_width = 110;
     private static int ship_height = 60;
     private static int ship_speed = 5;
+
     private static int missile_width = 40;
     private static int missile_height = 20;
     private static int missile_speed = 7;
+
+    private static int alien_width = 60;
+    private static int alien_height = 60;
+    private static int alien_speed = 3;
+
+    public static int getAlien_width() {
+        return alien_width;
+    }
+
+    public static void setAlien_width(int alien_width) {
+        GameConfig.alien_width = alien_width;
+    }
+
+    public static int getAlien_height() {
+        return alien_height;
+    }
+
+    public static void setAlien_height(int alien_height) {
+        GameConfig.alien_height = alien_height;
+    }
+
+    public static int getAlien_speed() {
+        return alien_speed;
+    }
+
+    public static void setAlien_speed(int alien_speed) {
+        GameConfig.alien_speed = alien_speed;
+    }
 
     public static int getMissile_width() {
         return missile_width;

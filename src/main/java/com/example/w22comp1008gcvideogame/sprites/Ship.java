@@ -2,10 +2,17 @@ package com.example.w22comp1008gcvideogame.sprites;
 
 import com.example.w22comp1008gcvideogame.GameConfig;
 import com.example.w22comp1008gcvideogame.Main;
-import com.example.w22comp1008gcvideogame.sprites.Sprite;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 public class Ship extends Sprite {
+    private final int REFRESH_RATE = 5;
+    private int currentMissilePause;
+
+    private ArrayList<Missile> activeMissiles;
+
     /**
      * This is the constructor for the Sprite class
      * @param posX        - the left most position of the Sprite
@@ -14,6 +21,12 @@ public class Ship extends Sprite {
     public Ship(int posX, int posY) {
         super(posX, posY, GameConfig.getShip_width(), GameConfig.getShip_height(), GameConfig.getShip_speed());
         image = new Image(Main.class.getResource("images/ship.png").toExternalForm());
+        activeMissiles = new ArrayList<>();
+        currentMissilePause = REFRESH_RATE;
+    }
+
+    public ArrayList<Missile> getActiveMissiles() {
+        return activeMissiles;
     }
 
     /**
@@ -60,5 +73,33 @@ public class Ship extends Sprite {
 
         if (posX > furthestRight)
             posX = furthestRight;
+    }
+
+    /**
+     * This method will shoot a missile from the middle of the ship
+     */
+    public void shootMissile()
+    {
+        if (currentMissilePause<0)
+        {
+            Missile newMissile = new Missile(posX+imageWidth,posY+imageHeight/2-GameConfig.getMissile_height()/2);
+            activeMissiles.add(newMissile);
+            currentMissilePause = REFRESH_RATE;
+        }
+
+    }
+
+    /**
+     * This method will draw the ship and then loop over all active missiles to draw them
+     * @param gc
+     */
+    public void draw(GraphicsContext gc)
+    {
+        currentMissilePause--;
+
+        super.draw(gc);
+
+        for (Missile missile : activeMissiles)
+            missile.draw(gc);
     }
 }
