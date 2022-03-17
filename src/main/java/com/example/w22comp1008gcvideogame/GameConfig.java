@@ -6,6 +6,33 @@ public class GameConfig {
     private static int ship_width = 110;
     private static int ship_height = 60;
     private static int ship_speed = 5;
+    private static int missile_width = 40;
+    private static int missile_height = 20;
+    private static int missile_speed = 7;
+
+    public static int getMissile_width() {
+        return missile_width;
+    }
+
+    public static void setMissile_width(int missile_width) {
+        GameConfig.missile_width = missile_width;
+    }
+
+    public static int getMissile_height() {
+        return missile_height;
+    }
+
+    public static void setMissile_height(int missile_height) {
+        GameConfig.missile_height = missile_height;
+    }
+
+    public static int getMissile_speed() {
+        return missile_speed;
+    }
+
+    public static void setMissile_speed(int missile_speed) {
+        GameConfig.missile_speed = missile_speed;
+    }
 
     public static int getShip_width() {
         return ship_width;

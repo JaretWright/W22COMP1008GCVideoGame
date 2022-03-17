@@ -1,5 +1,7 @@
 package com.example.w22comp1008gcvideogame;
 
+import com.example.w22comp1008gcvideogame.sprites.Missile;
+import com.example.w22comp1008gcvideogame.sprites.Ship;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -54,12 +56,14 @@ public class GameBoardController {
 
         //create the Ship sprite
         Ship ship = new Ship(100,100);
+        Missile missile = new Missile(100,100);
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 gc.drawImage(background, 0,0, GameConfig.getGame_width(), GameConfig.getGame_height());
 
+                missile.draw(gc);
                 updateShipLocation(ship);
                 ship.draw(gc);
             }

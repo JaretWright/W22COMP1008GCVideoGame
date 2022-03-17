@@ -1,8 +1,11 @@
-package com.example.w22comp1008gcvideogame;
+package com.example.w22comp1008gcvideogame.sprites;
 
+import com.example.w22comp1008gcvideogame.GameConfig;
+import com.example.w22comp1008gcvideogame.Main;
+import com.example.w22comp1008gcvideogame.sprites.Sprite;
 import javafx.scene.image.Image;
 
-public class Ship extends Sprite{
+public class Ship extends Sprite {
     /**
      * This is the constructor for the Sprite class
      * @param posX        - the left most position of the Sprite

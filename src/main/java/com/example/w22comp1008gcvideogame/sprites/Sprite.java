@@ -1,5 +1,6 @@
-package com.example.w22comp1008gcvideogame;
+package com.example.w22comp1008gcvideogame.sprites;
 
+import com.example.w22comp1008gcvideogame.GameConfig;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -93,13 +94,4 @@ public abstract class Sprite {
     {
         gc.drawImage(image, posX, posY, imageWidth, imageHeight);
     }
-
-    public void moveRight()
-    {
-        posX = posX + speed;
-
-        if (posX >= GameConfig.getGame_width()-imageWidth)
-            posX = GameConfig.getGame_width()-imageWidth;
-    }
-
 }
