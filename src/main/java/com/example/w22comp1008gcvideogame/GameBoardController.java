@@ -34,7 +34,6 @@ public class GameBoardController {
         anchorPane.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyPressed) {
-                System.out.println(keyPressed.getCode() + "-> activeKeys: "+ activeKeys);
                 activeKeys.add(keyPressed.getCode());
             }
         });
@@ -60,13 +59,29 @@ public class GameBoardController {
             @Override
             public void handle(long l) {
                 gc.drawImage(background, 0,0, GameConfig.getGame_width(), GameConfig.getGame_height());
+
+                updateShipLocation(ship);
                 ship.draw(gc);
-                ship.moveRight();
             }
         };
         timer.start();
 
         //attach the canvas to the anchorpane
         anchorPane.getChildren().add(canvas);
+    }
+
+    /**
+     * This method will update the location of the ship based on the keys pressed
+     */
+    private void updateShipLocation(Ship ship)
+    {
+        if (activeKeys.contains(KeyCode.DOWN))
+            ship.moveDown();
+        if (activeKeys.contains(KeyCode.UP) || activeKeys.contains("W"))
+            ship.moveUp();
+        if (activeKeys.contains(KeyCode.RIGHT))
+            ship.moveRight();
+        if (activeKeys.contains(KeyCode.LEFT))
+            ship.moveLeft();
     }
 }
