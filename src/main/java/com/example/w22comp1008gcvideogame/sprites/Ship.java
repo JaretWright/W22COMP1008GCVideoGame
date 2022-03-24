@@ -46,7 +46,7 @@ public class Ship extends Sprite {
      */
     public void moveDown()
     {
-        int furthestDown = GameConfig.getGame_height()-GameConfig.getShip_height();
+        int furthestDown = GameConfig.getGame_height()-GameConfig.getShip_height()-80;
         posY += speed;
 
         if (posY> furthestDown)

@@ -1,6 +1,7 @@
 package com.example.w22comp1008gcvideogame;
 
 import com.example.w22comp1008gcvideogame.sprites.Alien;
+import com.example.w22comp1008gcvideogame.sprites.Explosion;
 import com.example.w22comp1008gcvideogame.sprites.Missile;
 import com.example.w22comp1008gcvideogame.sprites.Ship;
 import javafx.animation.AnimationTimer;
@@ -70,8 +71,20 @@ public class GameBoardController {
         SecureRandom rng = new SecureRandom();
         ArrayList<Alien> aliens = new ArrayList<>();
         for (int i=1 ; i<= 5; i++)
-            aliens.add(new Alien(rng.nextInt(500, GameConfig.getGame_width()),
-                            rng.nextInt(0, GameConfig.getGame_height()-GameConfig.getAlien_height())));
+        {
+            Alien newAlien =new Alien(rng.nextInt(500, GameConfig.getGame_width()),
+                                rng.nextInt(0, GameConfig.getGame_height()-GameConfig.getAlien_height()-80));
+
+            for (Alien alien : aliens)
+            {
+                if (alien.collidesWith(newAlien))
+                    alien.moveLeft();
+            }
+            aliens.add(newAlien);
+        }
+
+        //create a collection to hold all of the explosions
+        ArrayList<Explosion> explosions = new ArrayList<>();
 
         timer = new AnimationTimer() {
             @Override
@@ -82,6 +95,20 @@ public class GameBoardController {
                 updateShip(ship);
                 ship.draw(gc);
 
+                //remove any destroyed aliens
+                removeDeceasedAliens(aliens);
+
+                //update the stats
+                updateStats(gc, aliens);
+
+                //check to see if the game should end
+                if (aliens.size()==0)
+                {
+                    finalMessage(gc, "Congratulations - you saved the universe!!", Color.WHITE);
+                    if(explosions.size()==0)
+                        timer.stop();
+                }
+
                 //draw the aliens
                 for (Alien alien : aliens)
                 {
@@ -91,7 +118,7 @@ public class GameBoardController {
                     {
                         if (missile.collidesWith(alien))
                         {
-                            //add an explosion
+                            explosions.add(new Explosion(alien.getPosX(), alien.getPosY(),50,50));
                             missile.setAlive(false);
                             alien.setAlive(false);
                         }
@@ -99,21 +126,23 @@ public class GameBoardController {
 
                     if (alien.collidesWith(ship))
                     {
-                        //draw an explosion
+                        explosions.add(new Explosion(alien.getPosX(), alien.getPosY(),100,100));
                         ship.setAlive(false);
                         alien.setAlive(false);
+
+                    }
+                    if(explosions.size()==0 && !ship.isAlive())
+                    {
                         finalMessage(gc, "The Aliens Got YOU!!", Color.RED);
                         timer.stop();
                     }
                 }
-                removeDeceasedAliens(aliens);
 
-                //check to see if the game should end
-                if (aliens.size()==0)
-                {
-                    finalMessage(gc, "Congratulations - you saved the universe!!", Color.WHITE);
-                    timer.stop();
-                }
+                explosions.removeIf(explosion -> !explosion.isAlive());
+
+                for (Explosion explosion : explosions)
+                    explosion.draw(gc);
+
             }
         };
         timer.start();
@@ -159,5 +188,21 @@ public class GameBoardController {
             ship.moveLeft();
         if (activeKeys.contains(KeyCode.SPACE))
             ship.shootMissile();
+    }
+
+    /**
+     * This method will update the scoreboard at the bottom of the canvas
+     */
+    private void updateStats(GraphicsContext gc, ArrayList<Alien> aliens)
+    {
+        //draw a black rectangle across the bottom of the canvas
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, GameConfig.getGame_height()-80, GameConfig.getGame_width(), 80);
+
+        //write how many aliens are left
+        Font font = Font.font("Arial",FontWeight.NORMAL, 32);
+        gc.setFont(font);
+        gc.setFill(Color.WHITE);
+        gc.fillText("Missiles remaining: "+aliens.size(), 600, 750);
     }
 }
