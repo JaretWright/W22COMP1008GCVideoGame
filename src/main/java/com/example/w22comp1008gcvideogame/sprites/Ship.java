@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class Ship extends Sprite {
     private final int REFRESH_RATE = 5;
@@ -98,6 +99,19 @@ public class Ship extends Sprite {
         currentMissilePause--;
 
         super.draw(gc);
+
+        //-> is a lambda expression
+        //it is calling the Predicate method test for every object in the collection (which in this
+        //case is a missile)
+        activeMissiles.removeIf(missile -> !missile.isAlive());
+
+        //This is the same thing using an annonymous inner class
+//        activeMissiles.removeIf(new Predicate<Missile>() {
+//            @Override
+//            public boolean test(Missile missile) {
+//                return !missile.isAlive();
+//            }
+//        });
 
         for (Missile missile : activeMissiles)
             missile.draw(gc);

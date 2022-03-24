@@ -96,6 +96,15 @@ public class GameBoardController {
                             alien.setAlive(false);
                         }
                     }
+
+                    if (alien.collidesWith(ship))
+                    {
+                        //draw an explosion
+                        ship.setAlive(false);
+                        alien.setAlive(false);
+                        finalMessage(gc, "The Aliens Got YOU!!", Color.RED);
+                        timer.stop();
+                    }
                 }
                 removeDeceasedAliens(aliens);
 
