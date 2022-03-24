@@ -14,6 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -29,6 +32,8 @@ public class GameBoardController {
     private Button startButton;
 
     private HashSet<KeyCode> activeKeys;
+
+    private AnimationTimer timer;
 
     @FXML
     private void startGame(ActionEvent event)
@@ -64,11 +69,11 @@ public class GameBoardController {
         //create a few aliens
         SecureRandom rng = new SecureRandom();
         ArrayList<Alien> aliens = new ArrayList<>();
-        for (int i=1 ; i<= 50; i++)
+        for (int i=1 ; i<= 5; i++)
             aliens.add(new Alien(rng.nextInt(500, GameConfig.getGame_width()),
                             rng.nextInt(0, GameConfig.getGame_height()-GameConfig.getAlien_height())));
 
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 gc.drawImage(background, 0,0, GameConfig.getGame_width(), GameConfig.getGame_height());
@@ -93,12 +98,30 @@ public class GameBoardController {
                     }
                 }
                 removeDeceasedAliens(aliens);
+
+                //check to see if the game should end
+                if (aliens.size()==0)
+                {
+                    finalMessage(gc, "Congratulations - you saved the universe!!", Color.WHITE);
+                    timer.stop();
+                }
             }
         };
         timer.start();
 
         //attach the canvas to the anchorpane
         anchorPane.getChildren().add(canvas);
+    }
+
+    /**
+     * This method will display the final message to the person playing the game
+     */
+    private void finalMessage(GraphicsContext gc, String message, Color color)
+    {
+        Font font = Font.font("Arial", FontWeight.NORMAL, 32);
+        gc.setFont(font);
+        gc.setFill(color);
+        gc.fillText(message, 250, 350);
     }
 
     private void removeDeceasedAliens(ArrayList<Alien> aliens) {
@@ -109,12 +132,7 @@ public class GameBoardController {
 //                aliens.remove(alien);
 //        }
 
-        for (Iterator<Alien> itr = aliens.iterator();
-             itr.hasNext();){
-            Alien alien = itr.next();
-            if (!alien.isAlive())
-                itr.remove();
-        }
+        aliens.removeIf(alien -> !alien.isAlive());
     }
 
     /**
